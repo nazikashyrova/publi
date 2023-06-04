@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% for friend_request in friend_requests %}
+    <div>
+        <p>Sender: {{ friend_request.sender.email }}</p>
+        <p>Status: {{ friend_request.status }}</p>
+        {% if friend_request.status == 'pending' %}
+            <form action="{% url 'main:accept' pk=friend_request.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Accept</button>
+            </form>
+            <form action="{% url 'main:reject' pk=friend_request.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Reject</button>
+            </form>
+        {% endif %}
+    </div>
+{% empty %}
+    <p>No friend requests found.</p>
+{% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="post">
+        <p>Created by: {{ post.user }}</p>
+        <p>{{ post.image }}</p>
+        <p>{{ post.text }}</p>
+        <p>{{ post.created_date }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Delete Post</button>
+    </form>
+</div>
+
+{% endblock content %}

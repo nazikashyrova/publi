@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body style="background: #dff9fb;">
+{% load static %}
+{% load i18n %}
+ {% if user.is_authenticated %}
+
+<nav>
+    {{ user.email}}
+    <ul>
+        <li><a href="{% url 'posts:post_create'%}">+ Add Post</a></li>
+        <li><a href="{% url 'main:user-detail' pk=user.pk %}">User Detail</a></li>
+        <li><a href="{% url 'main:user-update' pk=user.pk %}">User Update</a></li>
+        <li><a href="{% url 'main:user-list' %}">User List</a></li>
+        <li><a href="{% url 'main:friend-request-list' %}">Friend List</a></li>
+        <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+    </ul>
+</nav>
+ {% endif %}
+{% block content %}
+
+{% endblock content %}
+</body>
+</html>

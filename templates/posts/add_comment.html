@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- comments.html -->
+{% for comment in posts.comment %}
+  <div>
+    <strong>{{ comment.user }}</strong>
+    <p>{{ comment.text }}</p>
+    <small>{{ comment.created_date }}</small>
+  </div>
+{% empty %}
+  <p>No comments yet.</p>
+{% endfor %}
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Submit</button>
+</form>
+
+
+{% endblock content %}

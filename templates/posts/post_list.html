@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+{% for post in posts %}
+    <a href="{% url 'posts:post_update' pk=post.pk %}">
+        <button>Update</button>
+    </a>
+
+    <a href="{% url 'posts:post_delete' pk=post.pk %}">
+        <button>Delete</button>
+    </a>
+<div class="align-items-center justify-content-center display-flex">
+        <button>
+            <p>Created by: {{ post.user }}</p>
+            <p>{{ post.image }}</p>
+            <p>{{ post.text }}</p>
+            <p>{{ post.created_date }}</p>
+        </button>
+    </a>
+
+    <a href="{% url 'posts:like_post' pk=post.pk %}">
+        <button>like</button>
+    </a>
+
+    <a id="comment_button" href="{% url 'posts:add_comment' pk=post.pk %}">
+        <button>comment</button>
+    </a>
+
+    <a href="{% url 'posts:save_post' pk=post.pk %}">
+        <button>save</button>
+    </a>
+    <br> <br>
+</div>
+{% empty %}
+<p>No posts available.</p>
+{% endfor %}
+
+<div id="comments_section">
+    {% for comment in post.comments.all %}
+    <div>
+        <strong>{{ comment.user }}</strong>
+        <p>{{ comment.text }}</p>
+        <small>{{ comment.created_date }}</small>
+    </div>
+    {% empty %}
+    <p>No comments yet.</p>
+    {% endfor %}
+</div>
+
+<div id="comment_form" style="display: none;">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const commentButton = document.getElementById("comment_button");
+        const commentsSection = document.getElementById("comments_section");
+        const commentFormSection = document.getElementById("comment_form");
+
+        commentButton.addEventListener("click", function () {
+            commentsSection.style.display = "none";
+            commentFormSection.style.display = "block";
+        });
+    });
+</script>
+{% endblock content %}
