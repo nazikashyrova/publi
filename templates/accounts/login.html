@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class=" min-h-screen flex flex-col">
+<div class=" min-h-screen flex flex-col text-2xl font-Ubuntu">
     <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
         <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
             <h1 class="mb-8 text-3xl text-center">Login</h1>
@@ -8,8 +8,8 @@
             <form method="POST" id="signup-form" class="signup-form">
                 {% csrf_token %}
                 {% for field in form %}
-                <div class="w-full text-center py-2 rounded  focus:outline-none my-1">
-                    {{ field }}
+                <div class="w-full shadow-md bg-custum-lite-green text-center px-2 py-2 rounded focus:outline-none my-5">
+                     <span class="text-xl py-4 px-2">{{ field }}</span>
                 </div>
                 {% endfor %}
                 <button style="background: #115e59;"
@@ -20,8 +20,8 @@
             </form>
             {% include 'accounts/messages.html' %}
 
-            <p class="loginhere">
-                Don't have an account ? <a href="{% url 'accounts:signup' %}" class="loginhere-link">Register here</a>
+            <p class="text-center">
+                Don't have an account ? <a href="{% url 'accounts:signup' %}" class="text-custom-dark-green">Register here</a>
             </p>
 
         </div>

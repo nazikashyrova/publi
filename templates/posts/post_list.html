@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-
+<div class="font-Ubuntu text-xl"
 {% for post in posts %}
     <a href="{% url 'posts:post_update' pk=post.pk %}">
         <button>Update</button>
@@ -54,6 +54,7 @@
         {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
+</div>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
