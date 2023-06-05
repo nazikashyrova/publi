@@ -1,4 +1,7 @@
+from django.template.context_processors import static
 from django.urls import path
+
+from publi import settings
 from . import views
 app_name = 'posts'
 urlpatterns = [

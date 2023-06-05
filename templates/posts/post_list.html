@@ -1,60 +1,82 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<div class="font-Ubuntu text-xl"
-{% for post in posts %}
-    <a href="{% url 'posts:post_update' pk=post.pk %}">
-        <button>Update</button>
-    </a>
 
-    <a href="{% url 'posts:post_delete' pk=post.pk %}">
-        <button>Delete</button>
-    </a>
-<div class="align-items-center justify-content-center display-flex">
-        <button>
-            <p>Created by: {{ post.user }}</p>
-            <p>{{ post.image }}</p>
-            <p>{{ post.text }}</p>
-            <p>{{ post.created_date }}</p>
-        </button>
-    </a>
+<div class="font-Ubuntu text-xl">
+    {% for post in posts %}
 
-    <a href="{% url 'posts:like_post' pk=post.pk %}">
-        <button>like</button>
-    </a>
 
-    <a id="comment_button" href="{% url 'posts:add_comment' pk=post.pk %}">
-        <button>comment</button>
-    </a>
+    <div class="flex items-center justify-center">
+        <div class="m-4 p-4 bg-white border border-gray-300 rounded shadow-md">
+            <div class="flex items-center">
+                <img class="w-15 h-15 rounded-full" src="{{ user.profile_image }}"/>
+                <p class="font-bold">{{ post.user }}</p>
+                <div class="flex items-center justify-center space-x-4 px-2">
+                    <a href="{% url 'posts:post_update' pk=post.pk %}">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
+                            Update
+                        </button>
+                    </a>
 
-    <a href="{% url 'posts:save_post' pk=post.pk %}">
-        <button>save</button>
-    </a>
-    <br> <br>
-</div>
-{% empty %}
-<p>No posts available.</p>
-{% endfor %}
-
-<div id="comments_section">
-    {% for comment in post.comments.all %}
-    <div>
-        <strong>{{ comment.user }}</strong>
-        <p>{{ comment.text }}</p>
-        <small>{{ comment.created_date }}</small>
+                    <a href="{% url 'posts:post_delete' pk=post.pk %}">
+                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
+                            Delete
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <img class="w-96 h-96 rounded-full" src="{post.image_url}">
+            <p class="mt-2">{{ post.text }}</p>
+            <p class="text-gray-500 text-sm mt-2">{{ post.created_date }}</p>
+        </div>
     </div>
-    {% empty %}
-    <p>No comments yet.</p>
-    {% endfor %}
-</div>
 
-<div id="comment_form" style="display: none;">
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
-</div>
+
+    <div class="flex items-center justify-center space-x-4">
+        <a href="{% url 'posts:like_post' pk=post.pk %}">
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Like
+            </button>
+        </a>
+
+        <a id="comment_button" href="{% url 'posts:add_comment' pk=post.pk %}">
+            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                Comment
+            </button>
+        </a>
+
+        <a href="{% url 'posts:save_post' pk=post.pk %}">
+            <button class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                Save
+            </button>
+        </a>
+    </div>
+    <br><br>
+    {% empty %}
+    <p>No posts available.</p>
+    {% endfor %}
+
+    <div id="comments_section">
+        {% for comment in post.comments.all %}
+        <div>
+            <strong>{{ comment.user }}</strong>
+            <p>{{ comment.text }}</p>
+            <small>{{ comment.created_date }}</small>
+        </div>
+        {% empty %}
+        <p>No comments yet.</p>
+        {% endfor %}
+    </div>
+
+    <div id="comment_form" style="display: none;">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Submit
+            </button>
+        </form>
+    </div>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {

@@ -1,16 +1,30 @@
-<h1>User List</h1>
-<form method="GET" action="{% url 'main:user-list' %}">
-  <input type="text" name="q" placeholder="Search users">
-  <button type="submit">Search</button>
-</form>
-{% for user in users %}
-  <h2>{{ user.email }}</h2>
-  <p>{{ user.first_name }}</p>
-  <p>{{ user.last_name }}</p>
-  <p>{{ user.biography }}</p>
-  <form method="POST" action="{% url 'main:send-friend-request' %}">
-    {% csrf_token %}
-    <input type="hidden" name="user_id" value="{{ user.id }}">
-    <button type="submit">Send Friend Request</button>
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="flex flex-col items-center">
+  <h1 class="text-2xl font-bold">User List</h1>
+  <form method="GET" action="{% url 'main:user-list' %}" class="mt-4">
+    <input type="text" name="q" placeholder="Search users" class="px-4 py-2 border border-gray-300 rounded mr-2">
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
   </form>
-{% endfor %}
+  {% for user in users %}
+
+ {% if  user.id != request.user.id %}
+    <div class="mt-8">
+      <h2 class="text-xl font-bold">{{ user.email }}</h2>
+      <p class="text-lg">{{ user.first_name }}</p>
+      <p class="text-lg">{{ user.last_name }}</p>
+      <p class="text-lg">{{ user.biography }}</p>
+      <form method="POST" action="{% url 'main:send-friend-request' %}" class="mt-2">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user.id }}">
+        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Send Friend Request</button>
+      </form>
+    </div>
+
+ {% endif %}
+  {% endfor %}
+</div>
+
+{% endblock content %}

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.urls import reverse
 
+from publi import settings
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, is_staff=False, is_admin=False, is_active=True): # may look repetitive adding staff, admin and active status, but it simplifies the
@@ -32,7 +33,7 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=30,null=True)
     last_name = models.CharField(max_length=30,null=True)
     biography = models.CharField(max_length=300,null=True)
-    profile_image = models.ImageField(default='default.jpg', upload_to='profile_images')
+    profile_image = models.ImageField(upload_to='media/profile_images/',default='media/default.jpg')
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)

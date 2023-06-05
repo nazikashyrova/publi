@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}
-{% for friend_request in friend_requests %}
-    <div>
-        <p>Sender: {{ friend_request.sender.email }}</p>
-        <p>Status: {{ friend_request.status }}</p>
-        {% if friend_request.status == 'pending' %}
-            <form action="{% url 'main:accept' pk=friend_request.pk %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Accept</button>
-            </form>
-            <form action="{% url 'main:reject' pk=friend_request.pk %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Reject</button>
-            </form>
-        {% endif %}
+    <div class="py-8">
+        {% for friend_request in friend_requests %}
+            <div class="mb-4">
+                <p class="text-lg font-bold">Sender: {{ friend_request.sender.email }}</p>
+                <p class="text-lg">Status: {{ friend_request.status }}</p>
+                {% if friend_request.status == 'pending' %}
+                    <form action="{% url 'main:accept' pk=friend_request.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Accept</button>
+                    </form>
+                    <form action="{% url 'main:reject' pk=friend_request.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Reject</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p class="text-lg">No friend requests found.</p>
+        {% endfor %}
     </div>
-{% empty %}
-    <p>No friend requests found.</p>
-{% endfor %}
-
 {% endblock content %}
