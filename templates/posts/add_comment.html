@@ -1,20 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
 <!-- comments.html -->
-{% for comment in posts.comment %}
-  <div>
-    <strong>{{ comment.user }}</strong>
-    <p>{{ comment.text }}</p>
-    <small>{{ comment.created_date }}</small>
-  </div>
-{% empty %}
-  <p>No comments yet.</p>
-{% endfor %}
-<form method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Submit</button>
-</form>
+<div class="space-y-4">
+  {% for comment in posts.comment %}
+    <div class="border border-gray-300 p-4 rounded shadow-md">
+      <div class="flex items-center">
+        <strong>{{ comment.user }}</strong>
+        <small class="text-gray-500 text-sm ml-2">{{ comment.created_date }}</small>
+      </div>
+      <p class="mt-2">{{ comment.text }}</p>
+    </div>
+  {% empty %}
+    <p>No comments yet.</p>
+  {% endfor %}
+</div>
 
+<div class="min-h-screen flex flex-col text-2xl font-Ubuntu  items-center justify-center ">
+        <div class="bg-custum-lite-green px-2 py-2 rounded shadow-md text-black max-w-lg  flex flex-col  items-center justify-center ">
+            <h1 class="text-2xl font-bold">+Add comment</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <span class="text-xl py-2 px-8">{{ field }}</span>
+                {%endfor%}
+                <button type="submit" class="bg-custom-bg hover:bg-custom-bg text-white font-bold py-2 px-4 rounded">
+                    +add
+                </button>
+            </form>
+    </div>
+</div>
 
 {% endblock content %}
