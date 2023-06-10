@@ -6,7 +6,7 @@ from publi import settings
 
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='media/post_images/')
+    image = models.ImageField(upload_to='post_images/')
     text = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
     liked_by = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)

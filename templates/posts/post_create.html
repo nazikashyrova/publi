@@ -4,7 +4,7 @@
     <h1 class="text-2xl font-bold">+Add Post</h1>
     <div class="bg-custum-lite-green px-2 py-2 rounded shadow-md text-black max-w-lg  flex flex-col  items-center justify-center ">
 
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
             <span class="text-xl py-2 px-8">{{ field }}</span>

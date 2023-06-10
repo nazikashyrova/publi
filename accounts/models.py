@@ -33,7 +33,7 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=30,null=True)
     last_name = models.CharField(max_length=30,null=True)
     biography = models.CharField(max_length=300,null=True)
-    profile_image = models.ImageField(upload_to='media/profile_images/',default='media/default.jpg')
+    profile_image = models.ImageField(upload_to='profile_images/',default='default.jpg')
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
