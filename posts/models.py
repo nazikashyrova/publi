@@ -14,6 +14,9 @@ class Post(models.Model):
 
     def __str__(self):
         return f"Post by {self.user.email}"
+    def get_like_count(self):
+        return self.liked_by.count()
+
 
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

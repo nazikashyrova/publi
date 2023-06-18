@@ -3,7 +3,7 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Update Post</button>
+    <button type="submit" class="bg-custom-bg hover:bg-custom-bg text-white font-bold py-2 px-4 rounded mt-2">Update Post</button>
 </form>
 
 {% endblock content %}

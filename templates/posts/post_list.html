@@ -4,100 +4,25 @@
 
 <div class="font-Ubuntu text-xl">
     {% for post in posts %}
-
-
-    <div class="flex items-center justify-center">
+    <a href="{% url 'posts:post_detail' pk=post.pk %}" class="flex items-center justify-center">
         <div class="m-4 p-4 bg-white border border-gray-300 rounded shadow-md">
             <div class="flex items-center">
                 <img class="w-8 h-8 rounded-full" src="{{ user.profile_image.url }}"/>
                 <p class="font-bold py-2 px-2">{{ post.user }}</p>
-                <div class="flex items-center justify-center space-x-4 px-2">
-                    <a href="{% url 'posts:post_update' pk=post.pk %}">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
-                            Update
-                        </button>
-                    </a>
 
-                    <a href="{% url 'posts:post_delete' pk=post.pk %}">
-                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
-                            Delete
-                        </button>
-                    </a>
-                </div>
             </div>
-            <img src="{{ user.profile_image.url }}" class="w-150 h-150 mt-2">
+            <img src="{{ post.image.url }}" class="w-150 h-150 mt-2">
             <div class="flex items-center justify-center space-x-4">
-                <a href="{% url 'posts:like_post' pk=post.pk %}">
-                    <i class="fa-solid fa-heart"></i>
-                </a>
-
-                <a id="comment_button" href="{% url 'posts:add_comment' pk=post.pk %}">
-                    <i class="fa-solid fa-comment"></i>
-                </a>
-
-                <span class="like-icon text-black text-2xl cursor-pointer" onclick="toggleLike(this, {{ post.id }})">Like</span>
-
+                <i class="fa-solid bg-red-700 fa-heart"></i> {{ post.get_like_count }}
+                <i class="fa-solid fa-comment"></i>{{ post.comments.count }}
             </div>
             <p class="mt-2">{{ post.text }}</p>
             <p class="text-gray-500 text-sm mt-2">{{ post.created_date }}</p>
-
         </div>
-    </div>
-
-
+    </a>
     {% empty %}
     <p>No posts available.</p>
     {% endfor %}
 
-    <div id="comments_section">
-        {% for comment in post.comments.all %}
-        <div>
-            <strong>{{ comment.user }}</strong>
-            <p>{{ comment.text }}</p>
-            <small>{{ comment.created_date }}</small>
-        </div>
-        {% endfor %}
-    </div>
-
-    <div id="comment_form" style="display: none;">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Submit
-            </button>
-        </form>
-    </div>
 </div>
-<script>
-    function toggleLike(element, postId) {
-      $.ajax({
-        url: `/like/${postId}/`,
-        type: 'POST',
-        data: {
-          csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        dataType: 'json',
-        success: function(response) {
-          if (response.is_liked) {
-            element.classList.add("text-red-500");
-            element.classList.remove("cursor-pointer");
-          } else {
-            element.classList.remove("text-red-500");
-            element.classList.add("cursor-pointer");
-          }
-        }
-      });
-    }
-    document.addEventListener("DOMContentLoaded", function () {
-        const commentButton = document.getElementById("comment_button");
-        const commentsSection = document.getElementById("comments_section");
-        const commentFormSection = document.getElementById("comment_form");
-
-        commentButton.addEventListener("click", function () {
-            commentsSection.style.display = "none";
-            commentFormSection.style.display = "block";
-        });
-    });
-</script>
 {% endblock content %}

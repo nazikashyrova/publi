@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="font-Ubuntu text-xl">
+    <div href="{% url 'posts:post_detail' pk=post.pk %}" class="flex items-center justify-center">
+        <div class="m-4 p-4 bg-white border border-gray-300 rounded shadow-md">
+            <div class="flex items-center">
+                <img class="w-8 h-8 rounded-full" src="{{ user.profile_image.url }}"/>
+                <p class="font-bold py-2 px-2">{{ post.user }}</p>
+                {% if post.user == request.user %}
+                <div class="relative">
+                    <button type="button" class="flex items-center focus:outline-none dropdown-toggle">:</button>
+                    <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded shadow-lg hidden dropdown-menu">
+                        <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                           href="{% url 'posts:post_update' pk=post.pk %}">Update</a>
+                        <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                           href="{% url 'posts:post_delete' pk=post.pk %}">Delete</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <img src="{{ post.image.url }}" class="w-150 h-150 mt-2">
+            <div class="flex items-center justify-center space-x-4">
+                <form method="POST" action="{% url 'posts:post_detail' pk=post.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" name="like" class="text-red-600">
+                        {% if request.user in post.liked_by.all %}
+                        <span class="fas fa-heart text-red-600"></span>
+                        {% else %}
+                        <span class="far fa-heart"></span>
+                        {% endif %} {{ post.liked_by.count }}
+                    </button>
+                </form>
+            </div>
+            <p class="mt-2">{{ post.text }}</p>
+            <p class="text-gray-500 text-sm mt-2">{{ post.created_date }}</p>
+            <hr>
+            <div class="mt-4">
+                <h3>Comments:</h3>
+                {% for comment in post.comments.all %}
+                <p class="bg-gray-100 rounded-lg px-4 py-2 text-sm mt-2">{{ comment.text }}</p>
+                {% endfor %}
+                <form method="POST" action="{% url 'posts:post_detail' pk=post.pk %}">
+                    {% csrf_token %}
+                    <input type="text" name="comment_text" placeholder="Add a comment"
+                           class="border border-gray-300 rounded-lg px-4 py-2 mt-2">
+                    <button type="submit" name="comment"
+                            class="bg-custom-bg hover:bg-custom-bg text-white font-bold py-2 px-4 rounded mt-2">Post
+                        Comment
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+
+    dropdownToggle.addEventListener('click', function () {
+        dropdownMenu.classList.toggle('hidden');
+    });
+</script>
+{% endblock content %}

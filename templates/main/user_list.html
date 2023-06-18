@@ -6,7 +6,7 @@
   <h1 class="text-2xl font-bold">User List</h1>
   <form method="GET" action="{% url 'main:user-list' %}" class="mt-4">
     <input type="text" name="q" placeholder="Search users" class="px-4 py-2 border border-gray-300 rounded mr-2">
-    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
+    <button type="submit" class="bg-custom-bg hover:bg-custom-bg text-white font-bold py-2 px-4 rounded mt-2">Search</button>
   </form>
   {% for user in users %}
 
@@ -19,7 +19,7 @@
       <form method="POST" action="{% url 'main:send-friend-request' %}" class="mt-2">
         {% csrf_token %}
         <input type="hidden" name="user_id" value="{{ user.id }}">
-        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Send Friend Request</button>
+        <button type="submit" class="bg-custom-bg hover:bg-custom-bg text-white font-bold py-2 px-4 rounded mt-2">Send Friend Request</button>
       </form>
     </div>
 

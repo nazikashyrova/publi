@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     # third party apps
     'crispy_forms',
     'channels',
-    'fontawesomefree'
+    'fontawesomefree',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'  # changes the built-in user model to ours
