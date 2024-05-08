@@ -1,5 +1,8 @@
-asgiref==3.2.10
-pytz==2020.1
-django-ckeditor~=6.5.1
-six~=1.16.0
-fontawesomefree==6.4.0
+asgiref
+pytz
+django-ckeditor
+six
+fontawesomefree 
+django-crispy-forms
+channels
+Pillow
